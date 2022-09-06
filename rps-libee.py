@@ -74,6 +74,11 @@ class HumanPlayer(Player):
             moves_keys)
         return moves_dict[human_choice]
 
+# Computer player - always plays rock - subclass of player
+class RockPlayer(Player):
+    def move(self):
+        return moves_dict["rock"]
+
 # ReflectPlayer and CyclePlayer adapted from:
 # https://github.com/drodriguezmtb/Rock-Paper-Scissors-Udacity/blob/master/python-final-project.py
 
@@ -151,7 +156,7 @@ class Game:
         player_one_move = self.player_one.move()
         player_two_move = self.player_two.move()
         print(
-            f"Player 1 chose: {player_one_move}"
+            f"Player 1 chose: {player_one_move} "
             f"Player 2 chose: {player_two_move}")
 
         if tie(player_one_move, player_two_move) is True:
@@ -189,11 +194,20 @@ class Game:
             time.sleep(1)
         print("Game over!")
         if self.player_one_count > self.player_two_count:
-            print("Player 1 wins the match.")
+            print("Player 1 wins the match. ")
+            print(
+            f"Player 1 score:{self.player_one_count} vs "
+            f"Player 2 score:{self.player_two_count}")
         elif self.player_one_count == self.player_two_count:
             print("It's a tie!")
+            print(
+            f"Player 1 score:{self.player_one_count} vs "
+            f"Player 2 score:{self.player_two_count}")
         else:
             print("Player 2 wins the match.")
+            print(
+            f"Player 1 score:{self.player_one_count} vs "
+            f"Player 2 score:{self.player_two_count}")
 
 # Choice of opponent adapted from:
 # https://github.com/drodriguezmtb/Rock-Paper-Scissors-Udacity/blob/master/python-final-project.py
@@ -205,11 +219,12 @@ if __name__ == '__main__':
         "human": HumanPlayer(),
         "computer": RandomPlayer(),
         "cycler": CyclePlayer(),
-        "reflector": ReflectPlayer
+        "reflector": ReflectPlayer(),
+        "rock it": RockPlayer(),
     }
 
     choose = valid_input(
-        "Choose your contender: human, computer, cycler, or reflector\n",
+        "Choose your contender: human, computer, cycler, reflector or rock it\n",
         opponent_players.keys()).lower()
     if choose in opponent_players.keys():
         game = Game(HumanPlayer(), opponent_players[choose])
