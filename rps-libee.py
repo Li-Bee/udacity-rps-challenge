@@ -55,9 +55,7 @@ class Player:
         pass
 
     def learn(self, my_move, their_move):
-        # store the moves of the players
-        self.my_move = my_move
-        self.their_move = their_move
+        pass
 
 
 # Computer player - subclass of player
@@ -75,6 +73,8 @@ class HumanPlayer(Player):
         return moves_dict[human_choice]
 
 # Computer player - always plays rock - subclass of player
+
+
 class RockPlayer(Player):
     def move(self):
         return moves_dict["rock"]
@@ -84,6 +84,11 @@ class RockPlayer(Player):
 
 
 class ReflectPlayer(Player):
+    def learn(self, my_move, their_move):
+        # store the moves of the players
+        self.my_move = my_move
+        self.their_move = their_move
+
     def move(self):
         # if not played first round yet
         # then random move as not stored a move yet
@@ -94,6 +99,11 @@ class ReflectPlayer(Player):
 
 
 class CyclePlayer(Player):
+    def learn(self, my_move, their_move):
+        # store the moves of the players
+        self.my_move = my_move
+        self.their_move = their_move
+
     def move(self):
         # if not played first round yet
         # then random move as not stored a move yet
@@ -144,10 +154,10 @@ def tie(one, two):
 class Game:
 
     # assign player 1 and player 2 when object created
-    def __init__(self, PlayerOne, PlayerTwo):
+    def __init__(self, playerone, playertwo):
         # players who are playing the game
-        self.player_one = PlayerOne
-        self.player_two = PlayerTwo
+        self.player_one = playerone
+        self.player_two = playertwo
         # set the round counter to nil at start of the game
         self.player_one_count = 0
         self.player_two_count = 0
@@ -196,21 +206,22 @@ class Game:
         if self.player_one_count > self.player_two_count:
             print("Player 1 wins the match. ")
             print(
-            f"Player 1 score:{self.player_one_count} vs "
-            f"Player 2 score:{self.player_two_count}")
+                f"Player 1 score:{self.player_one_count} vs "
+                f"Player 2 score:{self.player_two_count}")
         elif self.player_one_count == self.player_two_count:
             print("It's a tie!")
             print(
-            f"Player 1 score:{self.player_one_count} vs "
-            f"Player 2 score:{self.player_two_count}")
+                f"Player 1 score:{self.player_one_count} vs "
+                f"Player 2 score:{self.player_two_count}")
         else:
             print("Player 2 wins the match.")
             print(
-            f"Player 1 score:{self.player_one_count} vs "
-            f"Player 2 score:{self.player_two_count}")
+                f"Player 1 score:{self.player_one_count} vs "
+                f"Player 2 score:{self.player_two_count}")
 
 # Choice of opponent adapted from:
 # https://github.com/drodriguezmtb/Rock-Paper-Scissors-Udacity/blob/master/python-final-project.py
+
 
 if __name__ == '__main__':
 
@@ -224,7 +235,8 @@ if __name__ == '__main__':
     }
 
     choose = valid_input(
-        "Choose your contender: human, computer, cycler, reflector or rock it\n",
+        f"Choose your contender: human, computer, cycler,"
+        f"reflector or rock it\n",
         opponent_players.keys()).lower()
     if choose in opponent_players.keys():
         game = Game(HumanPlayer(), opponent_players[choose])
